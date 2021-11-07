@@ -1,0 +1,16 @@
+graph {
+	node [shape = square];
+	
+	db;
+	error;
+	irc;
+	log;
+	obs;
+	server;
+	twitch;
+
+	db -- server;
+	server -- irc;
+	server -- obs;
+	server -- twitch;
+}
