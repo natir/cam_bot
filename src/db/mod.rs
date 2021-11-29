@@ -7,5 +7,5 @@
 /* std use */
 
 /* pub mod */
-pub mod schema;
 pub mod commands;
+pub mod schema;

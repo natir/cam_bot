@@ -21,3 +21,17 @@ pub use self::log::*;
 pub use self::obs::*;
 pub use self::server::*;
 pub use self::twitch::*;
+
+#[derive(std::fmt::Debug, thiserror::Error)]
+pub enum Error {
+    #[error(transparent)]
+    Db(#[from] Db),
+
+    #[error(transparent)]
+    Server(#[from] Server),
+
+    #[error(transparent)]
+    Other(#[from] Box<dyn std::error::Error>),
+}
+
+pub type Result<T> = std::result::Result<T, Error>;
