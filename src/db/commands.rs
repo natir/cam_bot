@@ -6,6 +6,7 @@
 use diesel::prelude::*;
 
 /* project use */
+/*
 use super::schema::commands;
 use super::schema::commands::dsl::{activate as commands_activate, commands as all_commands};
 use crate::Dbconn;
@@ -38,3 +39,5 @@ impl Command {
         .await
     }
 }
+
+*/

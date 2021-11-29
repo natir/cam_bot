@@ -1,36 +1,23 @@
-//! Definition of db schema
-
-/* std use */
-
-/* crate use */
-
-/* project use */
-
-diesel::table! {
-    commands {
-    id -> Integer,
-    name -> Text,
-    value -> Text,
-    activate -> Bool,
+table! {
+    commands (id) {
+        id -> Nullable<Integer>,
+        name -> Nullable<Text>,
+        value -> Nullable<Text>,
+        activate -> Nullable<Bool>,
     }
 }
 
-diesel::table! {
-    timers {
-    id -> Integer,
-    name -> Text,
-    value -> Text,
-    time -> Integer,
-    activate -> Bool,
+table! {
+    timers (id) {
+        id -> Nullable<Integer>,
+        name -> Nullable<Text>,
+        value -> Nullable<Text>,
+        time -> Nullable<Integer>,
+        activate -> Nullable<Bool>,
     }
 }
 
-diesel::table! {
-    twitch {
-    id -> Integer,
-    token -> Text,
-    refresh_token -> Text,
-    expire_in -> Integer,
-    generation_date -> Date,
-    }
-}
+allow_tables_to_appear_in_same_query!(
+    commands,
+    timers,
+);

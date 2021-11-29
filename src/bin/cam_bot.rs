@@ -69,6 +69,8 @@ async fn run_migration(rocket: rocket::Rocket<rocket::Build>) -> rocket::Rocket<
         .await
         .expect("can run migrations");
 
+    println!("Caca");
+    
     rocket
 }
 
