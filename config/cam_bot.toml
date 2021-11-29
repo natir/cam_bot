@@ -1,0 +1,6 @@
+[default]
+address = "0.0.0.0"
+port = 8080
+
+[global.databases]
+sqlite_db  = { url = "cam_bot.sqlite" }
