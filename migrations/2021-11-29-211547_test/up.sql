@@ -8,7 +8,7 @@ create table commands (
 );
 
 insert or replace into commands values(1, "echo", "echo (id) (value)", true);
-insert or replace into commands values(1, "echo", "echo (id) (value)", false);
+insert or replace into commands values(2, "echo", "echo (id) (value)", false);
 
 create table timers (
        id int primary key,
@@ -26,5 +26,5 @@ create table twitch (
        token text,
        refresh_token text,
        expire_in int,
-       generation_date date,
+       generation_date date
 );

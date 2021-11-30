@@ -5,14 +5,7 @@
 /* crate use */
 use clap::Parser;
 #[macro_use]
-extern crate rocket;
-#[macro_use]
-extern crate diesel;
-#[macro_use]
 extern crate diesel_migrations;
-#[macro_use]
-extern crate rocket_sync_db_pools;
-use diesel_migrations::run_migrations;
 
 use figment::providers::Format as _;
 
@@ -69,8 +62,6 @@ async fn run_migration(rocket: rocket::Rocket<rocket::Build>) -> rocket::Rocket<
         .await
         .expect("can run migrations");
 
-    println!("Caca");
-    
     rocket
 }
 
@@ -84,9 +75,13 @@ async fn main() -> error::Result<()> {
 
     /* create rocket object */
     let server = rocket::custom(config)
-	.attach(Dbconn::fairing())
+        .attach(Dbconn::fairing())
         .attach(rocket_dyn_templates::Template::fairing())
-        .attach(rocket::fairing::AdHoc::on_ignite("Run Migrations", run_migration));
+        .attach(rocket::fairing::AdHoc::on_ignite(
+            "Run Migrations",
+            run_migration,
+        ))
+        .mount("/commands", rocket::routes![cam_bot::server::commands::index, cam_bot::server::commands::get, cam_bot::server::commands::delete]);
 
     /* launch server */
     server

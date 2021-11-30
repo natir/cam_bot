@@ -1,4 +1,4 @@
-//! A twitch bot
+//! Cam_bot link to db
 
 /* std use */
 
