@@ -81,7 +81,7 @@ async fn main() -> error::Result<()> {
             "Run Migrations",
             run_migration,
         ))
-        .mount("/commands", rocket::routes![cam_bot::server::commands::index, cam_bot::server::commands::get, cam_bot::server::commands::delete]);
+        .mount("/commands", cam_bot::server::commands::routes());
 
     /* launch server */
     server

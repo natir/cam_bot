@@ -1,9 +1,9 @@
 table! {
     commands (id) {
-        id -> Nullable<Integer>,
-        name -> Nullable<Text>,
-        value -> Nullable<Text>,
-        activate -> Nullable<Bool>,
+        id -> Integer,
+        name -> Text,
+        value -> Text,
+        activate -> Bool,
     }
 }
 
@@ -27,8 +27,4 @@ table! {
     }
 }
 
-allow_tables_to_appear_in_same_query!(
-    commands,
-    timers,
-    twitch,
-);
+allow_tables_to_appear_in_same_query!(commands, timers, twitch,);

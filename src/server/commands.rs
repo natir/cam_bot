@@ -7,26 +7,78 @@
 /* std use */
 use crate::db;
 
-#[rocket::get("/")]
-pub async fn index(conn: crate::Dbconn) -> String {
-    let mut ret = String::new();
-    for cmd in db::commands::Command::all(&conn).await.unwrap() {
-        ret += &format!("{:?}\n", cmd);
+pub fn routes() -> Vec<rocket::Route> {
+    rocket::routes![index, get, delete, insert]
+}
+
+#[rocket::get("/", format = "application/json")]
+pub async fn index(
+    conn: crate::Dbconn,
+) -> Result<
+    rocket::serde::json::Json<Vec<db::commands::Command>>,
+    rocket::response::status::NotFound<String>,
+> {
+    let mut ret = Vec::new();
+    for cmd in db::commands::Command::all(&conn)
+        .await
+        .map_err(|e| rocket::response::status::NotFound(format!("Not found error: {}", e)))?
+    {
+        ret.push(cmd);
     }
 
-    ret
+    Ok(rocket::serde::json::Json(ret))
 }
 
-#[rocket::get("/<id>")]
-pub async fn get(id: i32, conn: crate::Dbconn) -> String {
-    let cmd = db::commands::Command::get(id, &conn).await.unwrap();
-
-    format!("{:?}", cmd)
+#[rocket::get("/<id>", format = "application/json")]
+pub async fn get(
+    id: i32,
+    conn: crate::Dbconn,
+) -> Result<
+    rocket::serde::json::Json<db::commands::Command>,
+    rocket::response::status::NotFound<String>,
+> {
+    Ok(rocket::serde::json::Json(
+        db::commands::Command::get(id, &conn).await.map_err(|e| {
+            rocket::response::status::NotFound(format!(
+                "Commands with id {} not found error: {}",
+                id, e
+            ))
+        })?,
+    ))
 }
 
-#[rocket::delete("/<id>")]
-pub async fn delete(id: i32, conn: crate::Dbconn) -> String {
-    db::commands::Command::delete(id, &conn).await.unwrap();
+#[rocket::delete("/<id>", format = "application/json")]
+pub async fn delete(
+    id: i32,
+    conn: crate::Dbconn,
+) -> Result<rocket::serde::json::Json<usize>, rocket::response::status::NotFound<String>> {
+    Ok(rocket::serde::json::Json(
+        db::commands::Command::delete(id, &conn)
+            .await
+            .map_err(|e| {
+                rocket::response::status::NotFound(format!(
+                    "Commands with id {} not found error: {}",
+                    id, e
+                ))
+            })?,
+    ))
+}
 
-    format!("Command {} was delete", id)
+#[rocket::post("/", data = "<command>")]
+pub async fn insert(
+    command: rocket::serde::json::Json<db::commands::Command>,
+    conn: crate::Dbconn,
+) -> Result<rocket::serde::json::Json<usize>, rocket::response::status::NotFound<String>> {
+    let move_value = command.clone();
+
+    Ok(rocket::serde::json::Json(
+        db::commands::Command::insert(move_value, &conn)
+            .await
+            .map_err(|e| {
+                rocket::response::status::NotFound(format!(
+                    "Failled to create command {:?} error: {}",
+                    *command, e
+                ))
+            })?,
+    ))
 }
