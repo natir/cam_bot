@@ -8,7 +8,7 @@
 use crate::db;
 
 pub fn routes() -> Vec<rocket::Route> {
-    rocket::routes![index, get, delete, insert]
+    rocket::routes![index, get, delete, insert, update]
 }
 
 #[rocket::get("/", format = "application/json")]
@@ -78,6 +78,26 @@ pub async fn insert(
                 rocket::response::status::NotFound(format!(
                     "Failled to create command {:?} error: {}",
                     *command, e
+                ))
+            })?,
+    ))
+}
+
+#[rocket::post("/update/<id>", data = "<command>")]
+pub async fn update(
+    id: i32,
+    command: rocket::serde::json::Json<db::commands::Command>,
+    conn: crate::Dbconn,
+) -> Result<rocket::serde::json::Json<usize>, rocket::response::status::NotFound<String>> {
+    let move_value = command.clone();
+
+    Ok(rocket::serde::json::Json(
+        db::commands::Command::update(id, move_value, &conn)
+            .await
+            .map_err(|e| {
+                rocket::response::status::NotFound(format!(
+                    "Failled to update command {} with value {:?} error: {}",
+                    id, *command, e
                 ))
             })?,
     ))

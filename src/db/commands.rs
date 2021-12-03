@@ -44,6 +44,17 @@ impl Command {
             .await
     }
 
+    pub async fn update(
+	id_: i32,
+        command: Command,
+        conn: &crate::Dbconn,
+    ) -> diesel::result::QueryResult<usize> {
+        conn.run(move |c| diesel::update(commands.filter(id.eq(id_))).set((id.eq(command.id), name.eq(command.name), value.eq(command.value), activate.eq(command.activate))
+
+	).execute(c))
+            .await
+    }
+    
     pub async fn delete(id_: i32, conn: &crate::Dbconn) -> diesel::result::QueryResult<usize> {
         conn.run(move |c| diesel::delete(commands.find(id_)).execute(c))
             .await
