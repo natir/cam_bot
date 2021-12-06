@@ -2,15 +2,18 @@ graph {
 	node [shape = square];
 	
 	db;
+	backend;
+	frontend;
+	
 	error;
 	irc;
-	log;
 	obs;
-	server;
 	twitch;
 
-	db -- server;
-	server -- irc;
-	server -- obs;
-	server -- twitch;
+	db -- backend;
+	backend -- irc;
+	backend -- obs;
+	backend -- twitch;
+	
+	backend -- frontend;
 }
