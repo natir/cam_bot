@@ -69,6 +69,18 @@ async fn run_migration(rocket: rocket::Rocket<rocket::Build>) -> rocket::Rocket<
 async fn main() -> error::Result<()> {
     let args = Command::parse();
 
+    /* Setup log level */
+    if let Some(level) = i82level(args.verbosity) {
+        env_logger::builder()
+            .format_timestamp(Some(env_logger::fmt::TimestampPrecision::Millis))
+            .filter_level(level.to_level_filter())
+            .init();
+    } else {
+        env_logger::Builder::from_env("CAM_BOT_LOG")
+            .format_timestamp(Some(env_logger::fmt::TimestampPrecision::Millis))
+            .init();
+    }
+
     /* load rocket config */
     let config = figment::Figment::from(rocket::Config::default())
         .merge(figment::providers::Toml::file(args.config).nested());
