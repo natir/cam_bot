@@ -14,6 +14,7 @@ extern crate diesel; /* I don't try to understand but diesel need this */
 pub mod backend;
 pub mod db;
 pub mod error;
+pub mod frontend;
 pub mod irc;
 pub mod obs;
 pub mod twitch;

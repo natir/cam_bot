@@ -92,8 +92,9 @@ async fn main() -> error::Result<()> {
             "Run Migrations",
             run_migration,
         ))
-        .mount("/commands", backend::commands::routes())
-        .mount("/timers", backend::commands::routes());
+	.mount("/", rocket::routes![frontend::file])
+        .mount("/api/commands", backend::commands::routes())
+        .mount("/api/timers", backend::commands::routes());
 
     /* launch server */
     server
