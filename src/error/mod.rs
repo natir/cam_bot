@@ -28,7 +28,7 @@ pub enum Error {
     Db(#[from] Db),
 
     #[error(transparent)]
-    Server(#[from] Server),
+    Server(#[from] Box<Server>),
 
     #[error(transparent)]
     Other(#[from] Box<dyn std::error::Error>),

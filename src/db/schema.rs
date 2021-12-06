@@ -9,11 +9,12 @@ table! {
 
 table! {
     timers (id) {
-        id -> Nullable<Integer>,
-        name -> Nullable<Text>,
-        value -> Nullable<Text>,
-        time -> Nullable<Integer>,
-        activate -> Nullable<Bool>,
+        id -> Integer,
+        name -> Text,
+        value -> Text,
+        time_th -> BigInt,
+        message_th -> BigInt,
+        activate -> Bool,
     }
 }
 

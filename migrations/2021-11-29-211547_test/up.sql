@@ -14,12 +14,13 @@ create table timers (
        id integer primary key autoincrement,
        name text,
        value text,
-       time integer,
+       time_th bigint,
+       message_th bigint,
        activate boolean
 );
 
-insert or replace into timers values(1, "sub", "Pensez a votre Prime mais ne subbez pas ici", 600, true);
-insert or replace into timers values(2, "nain", "nain", 600, false);
+insert or replace into timers values(1, "sub", "Pensez a votre Prime mais ne subbez pas ici", 600, 10, true);
+insert or replace into timers values(2, "nain", "nain", 600, 10, false);
 
 create table twitch (
        id integer primary key autoincrement,

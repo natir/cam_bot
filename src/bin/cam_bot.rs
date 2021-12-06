@@ -81,11 +81,12 @@ async fn main() -> error::Result<()> {
             "Run Migrations",
             run_migration,
         ))
-        .mount("/commands", cam_bot::server::commands::routes());
+        .mount("/commands", cam_bot::server::commands::routes())
+        .mount("/timers", cam_bot::server::commands::routes());
 
     /* launch server */
     server
         .launch()
         .await
-        .map_err(|error| error::Error::Server(error::Server::Execution { error }))
+        .map_err(|error| error::Error::Server(Box::new(error::Server::Execution { error })))
 }
