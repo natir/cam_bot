@@ -10,7 +10,7 @@ extern crate diesel_migrations;
 use figment::providers::Format as _;
 
 /* project use */
-use cam_bot::*;
+use ::backend::*;
 
 #[derive(clap::Parser, std::fmt::Debug)]
 #[clap(
@@ -54,7 +54,7 @@ pub fn i82level(level: i8) -> Option<log::Level> {
 async fn run_migration(rocket: rocket::Rocket<rocket::Build>) -> rocket::Rocket<rocket::Build> {
     diesel_migrations::embed_migrations!();
 
-    let conn = (cam_bot::Dbconn::get_one(&rocket))
+    let conn = (Dbconn::get_one(&rocket))
         .await
         .ok_or(error::Db::Connection)
         .unwrap();
@@ -88,13 +88,12 @@ async fn main() -> error::Result<()> {
     /* create rocket object */
     let server = rocket::custom(config)
         .attach(Dbconn::fairing())
-        .attach(rocket_dyn_templates::Template::fairing())
         .attach(rocket::fairing::AdHoc::on_ignite(
             "Run Migrations",
             run_migration,
         ))
-        .mount("/commands", cam_bot::backend::commands::routes())
-        .mount("/timers", cam_bot::backend::commands::routes());
+        .mount("/commands", backend::commands::routes())
+        .mount("/timers", backend::commands::routes());
 
     /* launch server */
     server
