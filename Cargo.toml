@@ -16,19 +16,57 @@ keywords = ["bot", "twitch"]
 
 publish = false # this crate haven't his place in crates.io
 
+default-run = "cam_bot"
 
 [workspace]
 members = ["backend", "frontend"]
-default-members = ["backend"]
 
 
 [dependencies]
+# workspace
+backend              = { path = "backend" }
+frontend             = { path = "frontend" }
 
+# db
+diesel               = { version = "1", features = ["sqlite"] }
+diesel_migrations    = "1"
+
+# server
+rocket               = { version = "0.5.0-rc.1", features = ["json"] }
+rocket_dyn_templates = { version = "0.1.0-rc.1", features = ["tera"] }
+rocket_sync_db_pools = { version = "0.1.0-rc.1", features = ["diesel_sqlite_pool"] }
+
+
+# log
+env_logger           = "0.9"
+log                  = "0.4"
+
+# read configuration
+figment              = { version = "0.10", features = ["toml", "env"] }
+
+# configuration
+clap                 = "3.0.0-beta.5"
+
+# error
+anyhow               = "1"
+thiserror            = "1"
+
+tokio = "1.14.0"
 
 [profile.release]
-#debug = true # uncomment for profiling
 lto = 'thin'
 opt-level = 3
 overflow-checks = false
 panic = 'abort'
 incremental = false
+
+[profile.profile]
+inherits = "release"
+debug = true
+
+[profile.release.package.frontend]
+opt-level = 'z'
+codegen-units = 1
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = ['-Os']

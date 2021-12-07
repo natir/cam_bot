@@ -7,25 +7,13 @@ edition = "2021"
 
 publish = false # this crate haven't his place in crates.io
 
-default-run = "cam_bot"
-
-
 [dependencies]
 # db
 diesel               = { version = "1", features = ["sqlite"] }
 diesel_migrations    = "1"
 
-# error
-anyhow               = "1"
-thiserror            = "1"
-
 # irc
 irc                  = "0.15"
-
-# log
-env_logger           = "0.9"
-log                  = "0.4"
-
 
 # obs
 
@@ -33,11 +21,6 @@ log                  = "0.4"
 rocket               = { version = "0.5.0-rc.1", features = ["json"] } 
 rocket_dyn_templates = { version = "0.1.0-rc.1", features = ["tera"] }
 rocket_sync_db_pools = { version = "0.1.0-rc.1", features = ["diesel_sqlite_pool"] }
-figment              = { version = "0.10", features = ["toml", "env"] }
 
 # twitch
 reqwest              = "0.11"
-
-# other
-clap                 = "3.0.0-beta.5"
-

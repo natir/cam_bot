@@ -10,7 +10,7 @@ extern crate diesel_migrations;
 use figment::providers::Format as _;
 
 /* project use */
-use ::backend::*;
+use cam_bot::*;
 
 #[derive(clap::Parser, std::fmt::Debug)]
 #[clap(
@@ -54,7 +54,7 @@ pub fn i82level(level: i8) -> Option<log::Level> {
 async fn run_migration(rocket: rocket::Rocket<rocket::Build>) -> rocket::Rocket<rocket::Build> {
     diesel_migrations::embed_migrations!();
 
-    let conn = (Dbconn::get_one(&rocket))
+    let conn = (backend::Dbconn::get_one(&rocket))
         .await
         .ok_or(error::Db::Connection)
         .unwrap();
@@ -65,7 +65,7 @@ async fn run_migration(rocket: rocket::Rocket<rocket::Build>) -> rocket::Rocket<
     rocket
 }
 
-#[rocket::main]
+#[tokio::main]
 async fn main() -> error::Result<()> {
     let args = Command::parse();
 
@@ -87,14 +87,13 @@ async fn main() -> error::Result<()> {
 
     /* create rocket object */
     let server = rocket::custom(config)
-        .attach(Dbconn::fairing())
+        .attach(backend::Dbconn::fairing())
         .attach(rocket::fairing::AdHoc::on_ignite(
             "Run Migrations",
             run_migration,
         ))
-	.mount("/", rocket::routes![frontend::file])
-        .mount("/api/commands", backend::commands::routes())
-        .mount("/api/timers", backend::commands::routes());
+        .mount("/api/commands", backend::api::commands::routes())
+        .mount("/api/timers", backend::api::commands::routes());
 
     /* launch server */
     server
