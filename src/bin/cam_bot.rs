@@ -87,11 +87,14 @@ async fn main() -> error::Result<()> {
 
     /* create rocket object */
     let server = rocket::custom(config)
+        .attach(rocket_dyn_templates::Template::fairing())
         .attach(backend::Dbconn::fairing())
         .attach(rocket::fairing::AdHoc::on_ignite(
             "Run Migrations",
             run_migration,
         ))
+        .mount("/frontend", rocket::fs::FileServer::from("frontend"))
+        .mount("/", rocket::routes![backend::frontend::file])
         .mount("/api/commands", backend::api::commands::routes())
         .mount("/api/timers", backend::api::commands::routes());
 

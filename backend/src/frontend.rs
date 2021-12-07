@@ -6,13 +6,9 @@
 
 /* std use */
 
-#[rocket::get("/<path..>", rank = 1)]
-pub async fn file(path: std::path::PathBuf) -> std::io::Result<rocket::fs::NamedFile> {
-    let mut path = std::path::Path::new("frontend").join(path);
-    if path.is_dir() {
-        path.push("index.html");
-    }
+#[rocket::get("/")]
+pub async fn file() -> rocket_dyn_templates::Template {
+    let context: std::collections::HashMap<&str, &str> = std::collections::HashMap::new();
 
-    println!("{:?}", path);
-    rocket::fs::NamedFile::open(path).await
+    rocket_dyn_templates::Template::render("index", &context)
 }
