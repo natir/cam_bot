@@ -13,7 +13,7 @@ extern crate diesel; /* I don't try to understand but diesel need this */
 /* mod declaration */
 pub mod api;
 pub mod db;
-pub mod frontend;
+pub mod front;
 pub mod irc;
 pub mod obs;
 pub mod twitch;

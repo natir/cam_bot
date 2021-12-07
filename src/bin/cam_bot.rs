@@ -54,7 +54,7 @@ pub fn i82level(level: i8) -> Option<log::Level> {
 async fn run_migration(rocket: rocket::Rocket<rocket::Build>) -> rocket::Rocket<rocket::Build> {
     diesel_migrations::embed_migrations!();
 
-    let conn = (backend::Dbconn::get_one(&rocket))
+    let conn = (back::Dbconn::get_one(&rocket))
         .await
         .ok_or(error::Db::Connection)
         .unwrap();
@@ -88,15 +88,15 @@ async fn main() -> error::Result<()> {
     /* create rocket object */
     let server = rocket::custom(config)
         .attach(rocket_dyn_templates::Template::fairing())
-        .attach(backend::Dbconn::fairing())
+        .attach(back::Dbconn::fairing())
         .attach(rocket::fairing::AdHoc::on_ignite(
             "Run Migrations",
             run_migration,
         ))
-        .mount("/frontend", rocket::fs::FileServer::from("frontend"))
-        .mount("/", rocket::routes![backend::frontend::file])
-        .mount("/api/commands", backend::api::commands::routes())
-        .mount("/api/timers", backend::api::commands::routes());
+        .mount("/", rocket::routes![back::front::file])
+        .mount("/api/commands", back::api::commands::routes())
+        .mount("/api/timers", back::api::commands::routes())
+	.mount("/front", rocket::fs::FileServer::from("front"));
 
     /* launch server */
     server

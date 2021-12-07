@@ -1,5 +1,5 @@
 [package]
-name = "backend"
+name = "back"
 description = "Backend of cam_bot twitch bot"
 version = "0.1.0"
 authors = ["Pierre Marijon <pierre@marijon.fr>"]
@@ -9,8 +9,9 @@ publish = false # this crate haven't his place in crates.io
 
 [dependencies]
 # db
-diesel               = { version = "1", features = ["sqlite"] }
+diesel               = { version = "1", features = ["sqlite", "chrono"] }
 diesel_migrations    = "1"
+chrono               = "0.4"
 
 # irc
 irc                  = "0.15"

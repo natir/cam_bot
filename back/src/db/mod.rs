@@ -9,4 +9,5 @@
 /* pub mod */
 pub mod commands;
 pub mod schema;
+pub mod twitch;
 pub mod timers;

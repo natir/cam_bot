@@ -20,12 +20,10 @@ table! {
 
 table! {
     twitch (id) {
-        id -> Nullable<Integer>,
-        token -> Nullable<Text>,
-        refresh_token -> Nullable<Text>,
-        expire_in -> Nullable<Integer>,
-        generation_date -> Nullable<Date>,
+        id -> Integer,
+        token -> Text,
+        refresh_token -> Text,
+        expire_in -> Integer,
+        generation_date -> Date,
     }
 }
-
-allow_tables_to_appear_in_same_query!(commands, timers, twitch,);

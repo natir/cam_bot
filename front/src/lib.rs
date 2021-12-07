@@ -1,3 +1,5 @@
+//! Frontend of cam_bot
+
 use seed::{prelude::*, *};
 
 // ------ ------

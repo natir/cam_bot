@@ -1,5 +1,5 @@
 [package]
-name = "frontend"
+name = "front"
 description = "Frontend of cam_bot twitch bot"
 version = "0.1.0"
 edition = "2021"
