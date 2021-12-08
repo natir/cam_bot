@@ -63,7 +63,5 @@ pub async fn main() -> error::Result<()> {
             .init();
     }
 
-    back::run(args.config)
-        .await
-        .map_err(error::Error::Back)
+    back::run(args.config).await.map_err(error::Error::Back)
 }

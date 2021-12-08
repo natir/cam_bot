@@ -9,7 +9,10 @@ use diesel::prelude::*;
 use super::schema::twitch;
 use super::schema::twitch::dsl::*;
 
-#[derive(Queryable, Insertable, Debug, Clone)]
+#[derive(
+    rocket::serde::Serialize, rocket::serde::Deserialize, Queryable, Insertable, Debug, Clone,
+)]
+#[serde(crate = "rocket::serde")]
 #[table_name = "twitch"]
 pub struct Twitch {
     pub id: i32,
@@ -20,6 +23,11 @@ pub struct Twitch {
 }
 
 impl Twitch {
+    pub async fn get(conn: crate::Dbconn) -> diesel::result::QueryResult<Twitch> {
+        conn.run(move |c| twitch.filter(twitch::id.eq(1)).first::<Twitch>(c))
+            .await
+    }
+
     pub async fn update(
         twitch_: Twitch,
         conn: &crate::Dbconn,

@@ -4,7 +4,7 @@
 
 /* crate use */
 
-/* std use */
+/* project use */
 use crate::db;
 
 pub fn routes() -> Vec<rocket::Route> {

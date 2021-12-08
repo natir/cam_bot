@@ -29,3 +29,4 @@ create table twitch (
        expire_in integer,
        generation_date date
 );
+

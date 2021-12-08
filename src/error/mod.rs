@@ -1,4 +1,4 @@
-//! Define error type in cam_bot backend
+//! Define error type in cam_bot
 
 /* std use */
 

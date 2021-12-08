@@ -59,7 +59,8 @@ pub async fn run(rocket_config: std::path::PathBuf) -> std::result::Result<(), e
         ))
         .mount("/", rocket::routes![front::file])
         .mount("/api/commands", api::commands::routes())
-        .mount("/api/timers", api::commands::routes())
+        .mount("/api/timers", api::timers::routes())
+        .mount("/api/twitch", api::twitch::routes())
         .mount("/front", rocket::fs::FileServer::from("front"));
 
     /* launch server */

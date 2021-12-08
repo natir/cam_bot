@@ -7,11 +7,12 @@ edition = "2021"
 
 publish = false # this crate haven't his place in crates.io
 
+
 [dependencies]
 # db
 diesel               = { version = "1", features = ["sqlite", "chrono"] }
 diesel_migrations    = "1"
-chrono               = "0.4"
+chrono               = { version = "0.4", features = ["serde"] }
 
 # irc
 irc                  = "0.15"
@@ -24,7 +25,7 @@ rocket_dyn_templates = { version = "0.1.0-rc.1", features = ["tera"] }
 rocket_sync_db_pools = { version = "0.1.0-rc.1", features = ["diesel_sqlite_pool"] }
 
 # twitch
-reqwest              = "0.11"
+reqwest              = { version = "0.11", features = ["json"] }
 
 # read configuration
 figment              = { version = "0.10", features = ["toml", "env"] }
