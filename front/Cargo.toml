@@ -2,19 +2,8 @@
 name = "front"
 description = "Frontend of cam_bot twitch bot"
 version = "0.1.0"
+authors = ["Pierre Marijon <pierre@marijon.fr>"]
 edition = "2021"
 
 publish = false
-
-
-[lib]
-crate-type = ["cdylib"]
-
-
-[dev-dependencies]
-wasm-bindgen-test = "0.3.18"
-
-
-[dependencies]
-seed = "0.8.0"
 

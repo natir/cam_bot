@@ -5,11 +5,5 @@
     <title>Cam_Bot</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module">
-      // https://rustwasm.github.io/docs/wasm-bindgen/examples/without-a-bundler.html
-      import init from './front/pkg/package.js';
-      init('./front/pkg/package_bg.wasm');
-    </script>
   </body>
 </html>
