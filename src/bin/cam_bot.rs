@@ -4,10 +4,6 @@
 
 /* crate use */
 use clap::Parser;
-#[macro_use]
-extern crate diesel_migrations;
-
-use figment::providers::Format as _;
 
 /* project use */
 use cam_bot::*;
@@ -51,22 +47,8 @@ pub fn i82level(level: i8) -> Option<log::Level> {
     }
 }
 
-async fn run_migration(rocket: rocket::Rocket<rocket::Build>) -> rocket::Rocket<rocket::Build> {
-    diesel_migrations::embed_migrations!();
-
-    let conn = (back::Dbconn::get_one(&rocket))
-        .await
-        .ok_or(error::Db::Connection)
-        .unwrap();
-    conn.run(|c| embedded_migrations::run(c))
-        .await
-        .expect("can run migrations");
-
-    rocket
-}
-
 #[tokio::main]
-async fn main() -> error::Result<()> {
+pub async fn main() -> error::Result<()> {
     let args = Command::parse();
 
     /* Setup log level */
@@ -81,26 +63,7 @@ async fn main() -> error::Result<()> {
             .init();
     }
 
-    /* load rocket config */
-    let config = figment::Figment::from(rocket::Config::default())
-        .merge(figment::providers::Toml::file(args.config).nested());
-
-    /* create rocket object */
-    let server = rocket::custom(config)
-        .attach(rocket_dyn_templates::Template::fairing())
-        .attach(back::Dbconn::fairing())
-        .attach(rocket::fairing::AdHoc::on_ignite(
-            "Run Migrations",
-            run_migration,
-        ))
-        .mount("/", rocket::routes![back::front::file])
-        .mount("/api/commands", back::api::commands::routes())
-        .mount("/api/timers", back::api::commands::routes())
-	.mount("/front", rocket::fs::FileServer::from("front"));
-
-    /* launch server */
-    server
-        .launch()
+    back::run(args.config)
         .await
-        .map_err(|error| error::Error::Backend(Box::new(error::Backend::Execution { error })))
+        .map_err(error::Error::Back)
 }

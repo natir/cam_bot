@@ -25,3 +25,9 @@ rocket_sync_db_pools = { version = "0.1.0-rc.1", features = ["diesel_sqlite_pool
 
 # twitch
 reqwest              = "0.11"
+
+# read configuration
+figment              = { version = "0.10", features = ["toml", "env"] }
+
+# error
+thiserror            = "1"

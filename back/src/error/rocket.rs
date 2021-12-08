@@ -7,7 +7,7 @@
 /* std use */
 
 #[derive(std::fmt::Debug, thiserror::Error)]
-pub enum Backend {
+pub enum Rocket {
     #[error("Error durring rocket execution: {error}")]
     Execution { error: rocket::Error },
 }
