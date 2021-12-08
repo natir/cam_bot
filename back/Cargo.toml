@@ -20,7 +20,7 @@ irc                  = "0.15"
 # obs
 
 # server
-rocket               = { version = "0.5.0-rc.1", features = ["json"] } 
+rocket               = { version = "0.5.0-rc.1", features = ["json", "tls"] }
 rocket_dyn_templates = { version = "0.1.0-rc.1", features = ["tera"] }
 rocket_sync_db_pools = { version = "0.1.0-rc.1", features = ["diesel_sqlite_pool"] }
 

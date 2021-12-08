@@ -2,5 +2,9 @@
 address = "0.0.0.0"
 port = 8080
 
+[global.tls]
+certs = "cert/cam_bot.crt"
+key = "cert/cam_bot.key"
+
 [global.databases]
 sqlite_db  = { url = "cam_bot.sqlite" }
