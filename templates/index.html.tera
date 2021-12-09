@@ -3,7 +3,17 @@
   <head>
     <meta charset="utf-8">
     <title>Cam_Bot</title>
+    <link rel="stylesheet" href="/static/css/cam_bot.css">
   </head>
   <body>
+    <script type="module">
+      import init from '/static/wasm/cam_bot.js';
+
+      async function run() {
+	  await init();
+      }
+
+      run()
+    </script>
   </body>
 </html>

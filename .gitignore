@@ -1,4 +1,9 @@
 /target
 Cargo.lock
 
+*.sqlite*
+config/cert/
+config/twitch.toml
+front/scss/
+static/
 *.svg
