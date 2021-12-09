@@ -9,5 +9,6 @@ run_task = { name = "serve_", fork = true }
 [tasks.serve_local]
 description = "Run server"
 dependencies = ["clippy", "format", "build"]
+workspace = true
 command = "cargo"
 args = ["run", "--", "--config", "config/cam_bot.toml", "--twitch", "config/twitch.toml", "-vvvv"]

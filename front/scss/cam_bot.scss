@@ -1,0 +1,7 @@
+@use 'color';
+
+body {
+    font: 100% Liberation, monospace;
+    background: color.$background;
+    color: color.$text;
+}

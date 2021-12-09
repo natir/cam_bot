@@ -18,6 +18,5 @@ command = "wasm-pack"
 args = ["build", "--target", "web", "--out-name", "cam_bot", "--dev", "--out-dir", "../static/wasm/"]
 
 [tasks.serve_]
-dependencies = ["build_scss", "wasm_build"]
-command = "echo"
-args = ["FRONT"]
+description = "Tasks request when serve is call"
+dependencies = ["build_scss", "wasm_build", "clippy", "format", "build"]
