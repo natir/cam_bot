@@ -18,8 +18,10 @@ publish = false # this crate haven't his place in crates.io
 
 default-run = "cam_bot"
 
+
 [workspace]
 members = ["back", "front"]
+
 
 [dependencies]
 # workspace
@@ -53,13 +55,16 @@ overflow-checks = false
 panic = 'abort'
 incremental = false
 
+
 [profile.profile]
 inherits = "release"
 debug = true
 
+
 [profile.release.package.front]
 opt-level = 'z'
 codegen-units = 1
+
 
 [package.metadata.wasm-pack.profile.release]
 wasm-opt = ['-Os']
