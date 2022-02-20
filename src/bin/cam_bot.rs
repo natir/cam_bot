@@ -3,7 +3,7 @@
 /* std use */
 
 /* crate use */
-use clap::Parser;
+use clap::Parser as _;
 
 /* project use */
 use cam_bot::*;
@@ -16,22 +16,16 @@ use cam_bot::*;
     about = "A twitch bot"
 )]
 struct Command {
-    #[clap(short = 'c', long = "config", about = "Path to configuration file")]
+    /// Path to configuration file
+    #[clap(short = 'c', long = "config")]
     pub config: std::path::PathBuf,
 
-    #[clap(
-        short = 't',
-        long = "twitch",
-        about = "Path to twitch configuration file"
-    )]
+    /// Path to twitch configuration file
+    #[clap(short = 't', long = "twitch")]
     pub twitch: std::path::PathBuf,
 
-    #[clap(
-        short = 'v',
-        long = "verbosity",
-        parse(from_occurrences),
-        about = "verbosity level also control by environment variable RUSTYREAD_LOG if flag is set RUSTYREAD_LOG value is ignored"
-    )]
+    /// verbosity level also control by environment variable CAM_BOT_LOG if flag is set RUSTYREAD_LOG value is ignored
+    #[clap(short = 'v', long = "verbosity", parse(from_occurrences))]
     pub verbosity: i8,
 }
 
@@ -63,5 +57,7 @@ pub async fn main() -> error::Result<()> {
             .init();
     }
 
-    back::run(args.config).await.map_err(error::Error::Back)
+    back::run(args.config, args.twitch)
+        .await
+        .map_err(error::Error::Back)
 }

@@ -30,7 +30,7 @@ pub use self::error::Error;
 #[database("sqlite_db")]
 pub struct Dbconn(diesel::SqliteConnection);
 
-async fn run_migration(rocket: rocket::Rocket<rocket::Build>) -> rocket::Rocket<rocket::Build> {
+pub async fn run_migration(rocket: rocket::Rocket<rocket::Build>) -> rocket::Rocket<rocket::Build> {
     diesel_migrations::embed_migrations!();
 
     let conn = (Dbconn::get_one(&rocket))
@@ -44,13 +44,19 @@ async fn run_migration(rocket: rocket::Rocket<rocket::Build>) -> rocket::Rocket<
     rocket
 }
 
-pub async fn run(rocket_config: std::path::PathBuf) -> std::result::Result<(), error::Error> {
+pub async fn run(
+    rocket_path: std::path::PathBuf,
+    twitch_path: std::path::PathBuf,
+) -> std::result::Result<(), error::Error> {
+    /* load twitch config */
+    let twitch_config = figment::providers::Toml::file(twitch_path);
+
     /* load rocket config */
-    let config = figment::Figment::from(rocket::Config::default())
-        .merge(figment::providers::Toml::file(rocket_config).nested());
+    let rocket_config = figment::Figment::from(rocket::Config::default())
+        .merge(figment::providers::Toml::file(rocket_path).nested());
 
     /* create rocket object */
-    let server = rocket::custom(config)
+    let server = rocket::custom(rocket_config)
         .attach(rocket_dyn_templates::Template::fairing())
         .attach(Dbconn::fairing())
         .attach(rocket::fairing::AdHoc::on_ignite(

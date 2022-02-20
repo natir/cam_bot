@@ -4,6 +4,7 @@ description = "A twitch bot"
 version = "0.1.0"
 authors = ["Pierre Marijon <pierre@marijon.fr>"]
 edition = "2021"
+rust-version = "1.56"
 
 homepage = "https://github.com/natir/cam_bot"
 repository = "https://github.com/natir/cam_bot"
@@ -41,7 +42,7 @@ env_logger           = "0.9"
 log                  = "0.4"
 
 # configuration
-clap                 = "3.0.0-beta.5"
+clap                 = { version = "3", features = ["derive"] }
 
 # error
 anyhow               = "1"
