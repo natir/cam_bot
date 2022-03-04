@@ -44,16 +44,6 @@ pub async fn run_migration(rocket: rocket::Rocket<rocket::Build>) -> rocket::Roc
     rocket
 }
 
-#[rocket::catch(500)]
-fn internal_error() -> &'static str {
-    "Whoops! Looks like we messed up."
-}
-
-#[rocket::catch(404)]
-fn not_found(req: &rocket::Request) -> String {
-    format!("I couldn't find '{}'. Try something else?", req.uri())
-}
-
 pub async fn run(
     rocket_path: std::path::PathBuf,
     twitch_path: std::path::PathBuf,
@@ -73,12 +63,11 @@ pub async fn run(
             "Run Migrations",
             run_migration,
         ))
-        .register("/", rocket::catchers![internal_error, not_found])
-        .mount("/", rocket::routes![front::file])
         .mount("/api/commands", api::commands::routes())
         .mount("/api/timers", api::timers::routes())
         .mount("/api/twitch", api::twitch::routes())
-        .mount("/static", rocket::fs::FileServer::from("static"));
+        .mount("/static", rocket::fs::FileServer::from("static").rank(2))
+        .mount("/", rocket::routes![front::front]);
 
     /* launch server */
     server

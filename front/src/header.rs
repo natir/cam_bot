@@ -20,7 +20,7 @@ impl Component for Header {
 
     fn view(&self, _ctx: &Context<Self>) -> Html {
         html! {
-        <h1>{ "Cam_Bot" }</h1>
+        <h1><a href="/">{ "Cam_Bot" }</a></h1>
         }
     }
 }

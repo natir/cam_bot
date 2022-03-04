@@ -6,11 +6,9 @@
 
 /* std use */
 
-use std::path::PathBuf;
-
-#[rocket::get("/<path..>?query")]
-pub async fn file(path: PathBuf) -> rocket_dyn_templates::Template {
-    let context: std::collections::HashMap<&str, &str> = std::collections::HashMap::new();
-
-    rocket_dyn_templates::Template::render("index", &context)
+#[rocket::get("/<_..>", rank = 3)]
+pub async fn front() -> Option<rocket::fs::NamedFile> {
+    rocket::fs::NamedFile::open("templates/index.html")
+        .await
+        .ok()
 }
