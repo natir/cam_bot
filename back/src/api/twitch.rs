@@ -23,12 +23,14 @@ pub async fn get(
     ))
 }
 
-#[rocket::get("/authorize?<code>")]
+#[rocket::get("/authorize?<client_id>&<secret>&<code>")]
 pub async fn authorize(
+    client_id: String,
+    secret: String,
     code: String,
     conn: crate::Dbconn,
 ) -> Result<rocket::serde::json::Json<usize>, rocket::response::status::NotFound<String>> {
-    let value = crate::twitch::request_token("", "", &code)
+    let value = crate::twitch::request_token(&client_id, &secret, &code)
         .await
         .map_err(|e| {
             rocket::response::status::NotFound(format!(

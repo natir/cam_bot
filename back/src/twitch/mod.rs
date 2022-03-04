@@ -91,3 +91,22 @@ pub async fn request_token(
 
     Ok(crate::db::twitch::Twitch::from(token))
 }
+
+pub async fn valid_token(token: String) -> error::Result<bool> {
+    let client = reqwest::Client::new();
+
+    let res = client
+        .get("https://id.twitch.tv/oauth2/validate")
+        .header("Authorization", format!("Bearer {}", token))
+        .send()
+        .await
+        .map_err(|error| error::Error::Reqwest(error::Reqwest::Twitch { error }))?;
+
+    if res.status() != reqwest::StatusCode::OK {
+        Err(error::Error::Reqwest(error::Reqwest::Authorize {
+            code: res.status(),
+        }))
+    } else {
+        Ok(true)
+    }
+}

@@ -15,6 +15,7 @@
       <li>
 	<ul><a href="commands">Commands</a></ul>
 	<ul><a href="timers">Timers</a></ul>
+	<ul><a href="twitch">Twitch</a></ul>
       </li>
     </nav>
 
@@ -22,14 +23,14 @@
 
     <footer>Unless otherwise stated, the content of the sites is placed under free license MIT.</footer>
 
-    <!-- <script type="module"> -->
-    <!--   import init from '/static/wasm/cam_bot.js'; -->
+    <script type="module">
+      import init from '/static/wasm/cam_bot.js';
 
-    <!--   async function run() { -->
-    <!-- 	  await init(); -->
-    <!--   } -->
+      async function run() {
+	  await init();
+      }
 
-    <!--   run() -->
-    <!-- </script> -->
+      run()
+    </script>
   </body>
 </html>

@@ -5,52 +5,85 @@
 /* crate use */
 use wasm_bindgen::prelude::*;
 use yew::prelude::*;
+use yew_router::prelude::*;
 
 /* project use */
 
 /* mod declaration */
+mod footer;
+mod header;
+mod left_menu;
 
-enum Msg {
-    AddOne,
+#[derive(Clone, Routable, PartialEq)]
+enum Route {
+    #[at("/")]
+    Home,
+    #[at("/commands")]
+    Commands,
+    #[at("/timers")]
+    Timers,
+    #[at("/twitch")]
+    Twitch,
+    #[not_found]
+    #[at("/404")]
+    NotFound,
 }
 
-struct Model {
-    value: i64,
-}
+struct Skeleton {}
 
-impl Component for Model {
-    type Message = Msg;
+impl Component for Skeleton {
+    type Message = ();
     type Properties = ();
 
     fn create(_ctx: &Context<Self>) -> Self {
-        Self { value: 0 }
+        Self {}
     }
 
-    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
-        match msg {
-            Msg::AddOne => {
-                self.value += 1;
-
-                true
-            }
+    fn view(&self, _ctx: &Context<Self>) -> Html {
+        html! {
+            <>
+                <header>
+                <header::Header />
+                </header>
+                <nav>
+                <left_menu::LeftMenu />
+        </nav>
+        <main>
+        <BrowserRouter>
+        <Switch<Route> render={Switch::render(switch)} />
+        </BrowserRouter>
+        </main>
+        <footer>
+        <footer::Footer />
+        </footer>
+                </>
         }
     }
+}
 
-    fn view(&self, ctx: &Context<Self>) -> Html {
-        // This gives us a component's "`Scope`" which allows us to send messages, etc to the component.
-        let link = ctx.link();
-        html! {
-            <div>
-                <button onclick={link.callback(|_| Msg::AddOne)}>{ "+1" }</button>
-                <p>{ self.value }</p>
-            </div>
+fn switch(routes: &Route) -> Html {
+    match routes.clone() {
+        Route::Home => {
+            html! { "Home" }
+        }
+        Route::Commands => {
+            html! { "Commands"}
+        }
+        Route::Timers => {
+            html! { "Timers" }
+        }
+        Route::Twitch => {
+            html! { "Twitch" }
+        }
+        Route::NotFound => {
+            html! { "404" }
         }
     }
 }
 
 #[wasm_bindgen(start)]
 pub fn run_app() -> Result<(), JsValue> {
-    yew::start_app::<Model>();
+    yew::start_app::<Skeleton>();
 
     Ok(())
 }
