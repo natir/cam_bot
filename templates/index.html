@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Cam_Bot</title>
+    <link rel="stylesheet" href="/static/css/cam_bot.css">
+  </head>
+  <body>
+
+    <header>
+      Cam_bot: A Twitch Bot
+    </header>
+
+    <nav>
+      <li>
+	<ul><a href="commands">Commands</a></ul>
+	<ul><a href="timers">Timers</a></ul>
+	<ul><a href="twitch">Twitch</a></ul>
+      </li>
+    </nav>
+
+    <section></section>
+
+    <footer>Unless otherwise stated, the content of the sites is placed under free license MIT.</footer>
+
+    <script type="module">
+      import init from '/static/wasm/cam_bot.js';
+
+      async function run() {
+	  await init();
+      }
+
+      run()
+    </script>
+  </body>
+</html>

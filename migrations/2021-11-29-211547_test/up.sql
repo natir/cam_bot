@@ -30,3 +30,4 @@ create table twitch (
        generation_date date
 );
 
+insert or replace into twitch values(1, "eiuau", "euiaua", 604800, "1970-01-01");

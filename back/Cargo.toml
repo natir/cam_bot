@@ -25,10 +25,13 @@ rocket_dyn_templates = { version = "0.1.0-rc.1", features = ["tera"] }
 rocket_sync_db_pools = { version = "0.1.0-rc.1", features = ["diesel_sqlite_pool"] }
 
 # twitch
-reqwest              = { version = "0.11", features = ["json"] }
+reqwest              = { version = "0.11", features = ["json", "blocking"] }
 
 # read configuration
 figment              = { version = "0.10", features = ["toml", "env"] }
 
 # error
 thiserror            = "1"
+
+# logging
+log                  = "0.4"

@@ -13,6 +13,7 @@ use yew_router::prelude::*;
 mod footer;
 mod header;
 mod left_menu;
+mod twitch;
 
 #[derive(Clone, Routable, PartialEq)]
 enum Route {
@@ -73,7 +74,7 @@ fn switch(routes: &Route) -> Html {
             html! { "Timers" }
         }
         Route::Twitch => {
-            html! { "Twitch" }
+            html! { <twitch::Twitch /> }
         }
         Route::NotFound => {
             html! { "404" }
@@ -83,6 +84,7 @@ fn switch(routes: &Route) -> Html {
 
 #[wasm_bindgen(start)]
 pub fn run_app() -> Result<(), JsValue> {
+    wasm_logger::init(wasm_logger::Config::new(log::Level::Trace));
     yew::start_app::<Skeleton>();
 
     Ok(())
