@@ -74,7 +74,49 @@ fn switch(routes: &Route) -> Html {
             html! { "Timers" }
         }
         Route::Twitch => {
-            html! { <twitch::Twitch /> }
+            html! {
+                   <twitch::Twitch>
+
+                    <twitch::scope::Scope name="analytics:read:extensions"/>
+            <twitch::scope::Scope name="analytics:read:games"/>
+            <twitch::scope::Scope name="bits:read"/>
+            <twitch::scope::Scope name="channel:edit:commercial"/>
+            <twitch::scope::Scope name="channel:manage:broadcast"/>
+            <twitch::scope::Scope name="channel:manage:extensions"/>
+            <twitch::scope::Scope name="channel:manage:polls"/>
+            <twitch::scope::Scope name="channel:manage:predictions"/>
+            <twitch::scope::Scope name="channel:manage:redemptions"/>
+            <twitch::scope::Scope name="channel:manage:schedule"/>
+            <twitch::scope::Scope name="channel:manage:videos"/>
+            <twitch::scope::Scope name="channel:read:editors"/>
+            <twitch::scope::Scope name="channel:read:goals"/>
+            <twitch::scope::Scope name="channel:read:hype_train"/>
+            <twitch::scope::Scope name="channel:read:polls"/>
+            <twitch::scope::Scope name="channel:read:predictions"/>
+            <twitch::scope::Scope name="channel:read:redemptions"/>
+            <twitch::scope::Scope name="channel:read:stream_key"/>
+            <twitch::scope::Scope name="channel:read:subscriptions"/>
+            <twitch::scope::Scope name="clips:edit"/>
+            <twitch::scope::Scope name="moderation:read"/>
+            <twitch::scope::Scope name="moderator:manage:banned_users"/>
+            <twitch::scope::Scope name="moderator:read:blocked_terms"/>
+            <twitch::scope::Scope name="moderator:manage:blocked_terms"/>
+            <twitch::scope::Scope name="moderator:manage:automod"/>
+            <twitch::scope::Scope name="moderator:read:automod_settings"/>
+            <twitch::scope::Scope name="moderator:manage:automod_settings"/>
+            <twitch::scope::Scope name="moderator:read:chat_settings"/>
+            <twitch::scope::Scope name="moderator:manage:chat_settings"/>
+            <twitch::scope::Scope name="user:edit"/>
+            <twitch::scope::Scope name="user:edit:follows"/>
+            <twitch::scope::Scope name="user:manage:blocked_users"/>
+            <twitch::scope::Scope name="user:read:blocked_users"/>
+            <twitch::scope::Scope name="user:read:broadcast"/>
+            <twitch::scope::Scope name="user:read:email"/>
+            <twitch::scope::Scope name="user:read:follows"/>
+            <twitch::scope::Scope name="user:read:subscriptions"/>
+
+               </twitch::Twitch>
+               }
         }
         Route::NotFound => {
             html! { "404" }

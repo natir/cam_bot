@@ -3,6 +3,8 @@ description = "Run server"
 dependencies = ["serve_workspace", "serve_local"]
 workspace = false
 
+[tasks.serve_]
+
 [tasks.serve_workspace]
 run_task = { name = "serve_", fork = true }
 
